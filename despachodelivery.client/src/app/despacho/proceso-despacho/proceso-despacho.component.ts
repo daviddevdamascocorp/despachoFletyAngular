@@ -10,6 +10,7 @@ import { Ciudad, Estado, Municipio, Zona } from '../../shared/interfaces/estados
 import { DireccionesService } from '../../shared/direcciones/direcciones.service';
 import { MatSelectChange } from '@angular/material/select';
 import { concatWith } from 'rxjs';
+import { LoadingService } from '../../shared/loader-mod/loadser/loading.service';
 
 @Component({
   selector: 'app-proceso-despacho',
@@ -29,7 +30,8 @@ export class ProcesoDespachoComponent implements OnInit{
  municipios!:Municipio[]
  zonas!:Zona[]
  ciudades!:Ciudad[]
-  constructor(private despachoService:DespachoService, private router:Router, private direccionService:DireccionesService) {
+  constructor(private despachoService:DespachoService, 
+    private router:Router, private direccionService:DireccionesService,  private loadingService:LoadingService) {
 
     
   }
@@ -65,9 +67,9 @@ export class ProcesoDespachoComponent implements OnInit{
       municipioSelect: new FormControl('', [Validators.required]),
       ciudadSelect: new FormControl('', [Validators.required]),
       zonaSelect: new FormControl('', [Validators.required]),
-      estado: new FormControl('', [Validators.required]),
-      municipio: new FormControl('', [Validators.required]),
-      ciudad: new FormControl('', [Validators.required]),
+      estado: new FormControl(''),
+      municipio: new FormControl(''),
+      ciudad: new FormControl(''),
       zona: new FormControl('', [Validators.required]),
       urbanizacion: new FormControl('', [Validators.required]),
       calle: new FormControl('', [Validators.required]),
@@ -160,6 +162,7 @@ export class ProcesoDespachoComponent implements OnInit{
 
 
   sendDespacho(){
+    this.loadingService.loadingOn()
     let direccionCompleta = "Estado: " + this.clientesForm.get('estado')?.value + ' ' +" Municipio: "+ this.clientesForm.get('municipio')?.value
     +" "+ this.clientesForm.get('ciudad')?.value +" " + this.clientesForm.get('zona')?.value +" Urbanización: "+ this.clientesForm.get('urbanizacion')?.value
     + " " +this.clientesForm.get('calle')?.value + " " +"Casa/Edificio: "+ this.clientesForm.get('casa')?.value + " " + `Piso:${this.clientesForm.get('piso')?.value}  Apartamento:${this.clientesForm.get('apto')?.value}`  
@@ -190,6 +193,7 @@ export class ProcesoDespachoComponent implements OnInit{
     Articles : listaArticulo} 
     console.log(data)
     this.despachoService.postClienteInfo(data).subscribe(result=>{
+      this.loadingService.loadingOff()
       let response = JSON.stringify(result)
       this.router.navigate(['/comprobante'],{queryParams:{datos:btoa(response)}})
    

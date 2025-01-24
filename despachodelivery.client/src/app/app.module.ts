@@ -9,9 +9,11 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { MaterialModule } from './shared/material/material.module';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
+    
  
   ],
   imports: [

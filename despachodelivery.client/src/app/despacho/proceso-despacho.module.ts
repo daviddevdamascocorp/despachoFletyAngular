@@ -6,6 +6,7 @@ import { MaterialModule } from '../shared/material/material.module';
 import { MatSelectModule } from '@angular/material/select';
 import { ProcesoDespachoComponent } from './proceso-despacho/proceso-despacho.component';
 import { DespachoComprobanteComponent } from './comprobante/despacho-comprobante/despacho-comprobante.component';
+import { LoaderModModule } from '../shared/loader-mod/loader-mod.module';
 
 
 
@@ -16,7 +17,8 @@ import { DespachoComprobanteComponent } from './comprobante/despacho-comprobante
     ProcesoDespachoRoutingModule,
     ReactiveFormsModule,
     MaterialModule,
-    MatSelectModule
+    MatSelectModule,
+    LoaderModModule
   ]
 })
 export class ProcesoDespachoModule { }
