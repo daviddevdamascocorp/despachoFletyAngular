@@ -189,7 +189,7 @@
      
 
             <div class="mt-4">
-                <button type="submit" class="btn btn-primary" id="confirm-btn" (click)="sendDespacho()">Generar Guía Despacho </button>
+                <button type="submit" class="btn btn-primary" id="confirm-btn" (click)="sendDespacho()" [disabled]="!clientesForm.valid">Generar Guía Despacho </button>
 
             </div>
 
