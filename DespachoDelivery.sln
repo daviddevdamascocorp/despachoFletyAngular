@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.34916.146
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DespachoDelivery.Server", "DespachoDelivery.Server\DespachoDelivery.Server.csproj", "{8154D6AB-DADD-4623-8770-653AAA2D485F}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "despachodelivery.client", "despachodelivery.client\despachodelivery.client.esproj", "{288A9DC4-5CAA-434F-A535-3379DAC9C2F9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8154D6AB-DADD-4623-8770-653AAA2D485F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8154D6AB-DADD-4623-8770-653AAA2D485F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8154D6AB-DADD-4623-8770-653AAA2D485F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8154D6AB-DADD-4623-8770-653AAA2D485F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{288A9DC4-5CAA-434F-A535-3379DAC9C2F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{288A9DC4-5CAA-434F-A535-3379DAC9C2F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{288A9DC4-5CAA-434F-A535-3379DAC9C2F9}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{288A9DC4-5CAA-434F-A535-3379DAC9C2F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{288A9DC4-5CAA-434F-A535-3379DAC9C2F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{288A9DC4-5CAA-434F-A535-3379DAC9C2F9}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {66B40F1B-1127-4F46-B17B-D6FB9A8E5E82}
+	EndGlobalSection
+EndGlobal

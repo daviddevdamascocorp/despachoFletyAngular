@@ -1,0 +1,104 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\david\\source\\repos\\DespachoDelivery\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{8154D6AB-DADD-4623-8770-653AAA2D485F}|DespachoDelivery.Server\\DespachoDelivery.Server.csproj|c:\\users\\david\\source\\repos\\despachodelivery\\despachodelivery.server\\models\\guiadespacho.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8154D6AB-DADD-4623-8770-653AAA2D485F}|DespachoDelivery.Server\\DespachoDelivery.Server.csproj|solutionrelative:despachodelivery.server\\models\\guiadespacho.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8154D6AB-DADD-4623-8770-653AAA2D485F}|DespachoDelivery.Server\\DespachoDelivery.Server.csproj|c:\\users\\david\\source\\repos\\despachodelivery\\despachodelivery.server\\controllers\\despachocliente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8154D6AB-DADD-4623-8770-653AAA2D485F}|DespachoDelivery.Server\\DespachoDelivery.Server.csproj|solutionrelative:despachodelivery.server\\controllers\\despachocliente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8154D6AB-DADD-4623-8770-653AAA2D485F}|DespachoDelivery.Server\\DespachoDelivery.Server.csproj|c:\\users\\david\\source\\repos\\despachodelivery\\despachodelivery.server\\controllers\\direccionescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8154D6AB-DADD-4623-8770-653AAA2D485F}|DespachoDelivery.Server\\DespachoDelivery.Server.csproj|solutionrelative:despachodelivery.server\\controllers\\direccionescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8154D6AB-DADD-4623-8770-653AAA2D485F}|DespachoDelivery.Server\\DespachoDelivery.Server.csproj|c:\\users\\david\\source\\repos\\despachodelivery\\despachodelivery.server\\models\\comprobante\\comprobante.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8154D6AB-DADD-4623-8770-653AAA2D485F}|DespachoDelivery.Server\\DespachoDelivery.Server.csproj|solutionrelative:despachodelivery.server\\models\\comprobante\\comprobante.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8154D6AB-DADD-4623-8770-653AAA2D485F}|DespachoDelivery.Server\\DespachoDelivery.Server.csproj|c:\\users\\david\\source\\repos\\despachodelivery\\despachodelivery.server\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{8154D6AB-DADD-4623-8770-653AAA2D485F}|DespachoDelivery.Server\\DespachoDelivery.Server.csproj|solutionrelative:despachodelivery.server\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\david\\source\\repos\\DespachoDelivery\\DespachoDelivery.Server\\appsettings.json",
+              "RelativeDocumentMoniker": "DespachoDelivery.Server\\appsettings.json",
+              "ToolTip": "C:\\Users\\david\\source\\repos\\DespachoDelivery\\DespachoDelivery.Server\\appsettings.json",
+              "RelativeToolTip": "DespachoDelivery.Server\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-01-21T20:41:03.12Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "GuiaDespacho.cs",
+              "DocumentMoniker": "C:\\Users\\david\\source\\repos\\DespachoDelivery\\DespachoDelivery.Server\\Models\\GuiaDespacho.cs",
+              "RelativeDocumentMoniker": "DespachoDelivery.Server\\Models\\GuiaDespacho.cs",
+              "ToolTip": "C:\\Users\\david\\source\\repos\\DespachoDelivery\\DespachoDelivery.Server\\Models\\GuiaDespacho.cs",
+              "RelativeToolTip": "DespachoDelivery.Server\\Models\\GuiaDespacho.cs",
+              "ViewState": "AQIAAAIAAAAAAAAAAAAAAAkAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-23T15:07:33.495Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DespachoCliente.cs",
+              "DocumentMoniker": "C:\\Users\\david\\source\\repos\\DespachoDelivery\\DespachoDelivery.Server\\Controllers\\DespachoCliente.cs",
+              "RelativeDocumentMoniker": "DespachoDelivery.Server\\Controllers\\DespachoCliente.cs",
+              "ToolTip": "C:\\Users\\david\\source\\repos\\DespachoDelivery\\DespachoDelivery.Server\\Controllers\\DespachoCliente.cs",
+              "RelativeToolTip": "DespachoDelivery.Server\\Controllers\\DespachoCliente.cs",
+              "ViewState": "AQIAAF8AAAAAAAAAAAAmwHAAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-24T13:02:42.724Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Comprobante.cs",
+              "DocumentMoniker": "C:\\Users\\david\\source\\repos\\DespachoDelivery\\DespachoDelivery.Server\\Models\\Comprobante\\Comprobante.cs",
+              "RelativeDocumentMoniker": "DespachoDelivery.Server\\Models\\Comprobante\\Comprobante.cs",
+              "ToolTip": "C:\\Users\\david\\source\\repos\\DespachoDelivery\\DespachoDelivery.Server\\Models\\Comprobante\\Comprobante.cs",
+              "RelativeToolTip": "DespachoDelivery.Server\\Models\\Comprobante\\Comprobante.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAuAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-23T19:36:26.363Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DireccionesController.cs",
+              "DocumentMoniker": "C:\\Users\\david\\source\\repos\\DespachoDelivery\\DespachoDelivery.Server\\Controllers\\DireccionesController.cs",
+              "RelativeDocumentMoniker": "DespachoDelivery.Server\\Controllers\\DireccionesController.cs",
+              "ToolTip": "C:\\Users\\david\\source\\repos\\DespachoDelivery\\DespachoDelivery.Server\\Controllers\\DireccionesController.cs",
+              "RelativeToolTip": "DespachoDelivery.Server\\Controllers\\DireccionesController.cs",
+              "ViewState": "AQIAAIoAAAAAAAAAAAAAAEMAAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-22T16:36:29.789Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

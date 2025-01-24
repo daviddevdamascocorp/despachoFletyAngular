@@ -1,0 +1,8 @@
+{
+"SpaProxyServer": {
+"ServerUrl": "https://localhost:4200",
+"LaunchCommand": "npm start",
+"WorkingDirectory": "C:\\Users\\david\\source\\repos\\DespachoDelivery\\DespachoDelivery.Server\\..\\despachodelivery.client",
+"MaxTimeoutInSeconds": "120"
+}
+}

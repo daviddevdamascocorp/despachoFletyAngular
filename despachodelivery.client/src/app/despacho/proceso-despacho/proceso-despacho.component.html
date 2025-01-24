@@ -1,0 +1,199 @@
+<div class="container-fluid">
+    <style>
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+            visibility: hidden;
+        }
+        .brand-image img{
+            width: 300px;
+        }
+    </style>
+    <div class="logos col mt-3">
+        <div class="logos col mt-3">
+            <div class="brand-image">
+                <img src="logodamascorojo.png" alt="Damasco Rojo Logo">
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center">
+        <h3>Generar Guia de Despacho Tienda</h3>
+    </div>
+    <div class="row g-2">
+        <form id="cupon-form" [formGroup]="clientesForm">
+          
+            <div class="form-group">
+                <label for="SucursalId">Sucursales</label>
+                
+                <select  id="SucursalDestino"  class="form-select" formControlName="Sucursal" >
+                   
+                    <option value="">Elige</option>
+                    <option *ngFor="let DamascoTienda of DamascoTiendas" [value]="DamascoTienda.value"  >
+                        {{DamascoTienda.text}}
+                      </option>
+                </select>
+                <span id="sucursal-error" class="error-message"></span>
+            </div>
+            <div class="row g-2">
+                <div class="col form-group">
+                    <label for="">Número de factura</label>
+                    <input type="text" id="num-fac" placeholder="Número de factura" class="form-control" formControlName="InvoiceNumber"  (input)="procesarFactura($event)">
+                    <span id="num-fac-error" class="error-message"></span>
+                </div>
+                <div class="col form-group">
+                    <label for="">Fecha de Factura</label>
+                    <input type="date" name="fecha-factura" id="fecha-factura" class="form-control" formControlName="InvoiceDate">
+
+                </div>
+            </div>
+          
+            <div class="row">
+                <div class="col form-group">
+
+                    <div class="row">
+                        <label for="">Documento de identidad</label>
+                        <div class="col form-group">
+                            <select  id="SucursalDestino"  class="form-select" formControlName="TipoCedula" >
+                   
+                                <option value="">Elige</option>
+                                   <option *ngFor="let cedula of cedulas" [value]="cedula"  >
+                                       {{cedula}}
+                                   </option>
+                               </select>
+                          
+                            <span id="tipo-ced-error" class="error-message"></span>
+                        </div>
+                        <div class="col form-group">
+
+                            <input type="text" placeholder="Número de cedula" id="num-doc" class="form-control" formControlName="Cedula">
+                            <span id="num-doc-error" class="error-message"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col form-group">
+                    <label for="">Nombre </label>
+                    <input type="text" id="Nombre" placeholder="Nombre" class="form-control" formControlName="NameClient">
+                    <span id="nombre-error" class="error-message"></span>
+                </div>
+                <div class="col form-group">
+                    <label for="">Apellido</label>
+                    <input type="text" id="Apellido" placeholder="Apellido" class="form-control" formControlName="SurnameClient">
+                    <span id="apellido-error" class="error-message"></span>
+                </div>
+            
+
+            </div>
+            
+            <div class="form-group">
+                <label for="">Correo electronico</label>
+                <input type="text" id="Correo" name="Correo" placeholder="Correo electrónico" class="form-control" formControlName="CorreoCliente">
+                <span id="correo-error" class="error-message"></span>
+            </div>
+            <div class="row g-2">
+                <div class="col form-group">
+                    <label for="">
+                        Número de teléfono
+                    </label>
+
+                    <select name="" class="form-select" id="cod-telf" formControlName="TypePhone">
+                        <option value="">Elige</option>
+                        <option *ngFor="let telefono of telefonos" [value]="telefono">{{telefono}}</option>
+                        
+                    </select>
+                    <span id="cod-telf-error" class="error-message"></span>
+                </div>
+                <div class="col form-group">
+                    <label for=""></label>
+                    <input type="text" id="num-telf" placeholder="Número de teléfono" class="form-control" formControlName="PhoneNumberClient">
+                    <span id="num-telf-error" class="error-message"></span>
+                </div>
+            </div>
+
+            <div class="row g-5 mt-2">
+               
+                <div class="col form-group">
+                    
+
+                 <mat-form-field>
+                        <mat-label>Estado</mat-label>
+                        <mat-select formControlName="estadoSelect" [errorStateMatcher]="matcher" (selectionChange)="getMunicipio($event)" (selectionChange)="setEstado($event)">
+                            <mat-option *ngFor="let estado of estados" [value]="estado.provinceId" >
+                                {{estado.provinceName}}</mat-option>
+                    </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col form-group">
+                    <mat-form-field>
+                        <mat-label>Municipio</mat-label>
+                        <mat-select formControlName="municipioSelect" [errorStateMatcher]="matcher" (selectionChange)="getCiudad($event)">
+                            <mat-option *ngFor="let municipio of municipios" [value]="municipio.munucipId" >
+                                {{municipio.munucipName}}</mat-option>
+                    </mat-select>
+                    </mat-form-field>
+                   
+                </div>
+                <div class="col form-group">
+                    <mat-form-field>
+                        <mat-label>Ciudad</mat-label>
+                        <mat-select formControlName="ciudadSelect" [errorStateMatcher]="matcher" (selectionChange)="getZona($event)">
+                            <mat-option *ngFor="let ciudad of ciudades" [value]="ciudad.cityId" >
+                                {{ciudad.cityName}}</mat-option>
+                    </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col form-group">
+                    <mat-form-field>
+                        <mat-label>Parroquia</mat-label>
+                        <mat-select formControlName="zonaSelect" [errorStateMatcher]="matcher" (selectionChange)="setZona($event)">
+                            <mat-option *ngFor="let zona of zonas" [value]="zona.zoneId" >
+                                {{zona.zoneName}}</mat-option>
+                    </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row g-5">
+               <div class="col form-group">
+                 <label for="">Urbanización</label>
+                <input type="text" id="Urb" name="Urb" placeholder="Urbanización" class="form-control" formControlName="urbanizacion">
+                <span id="urb-error" class="error-message"></span>
+               </div>
+               <div class="col form-group">
+                 <label for="">Calle o avenida</label>
+                <input type="text" id="calle" name="calle" placeholder="Calle/Avenida" class="form-control" formControlName="calle">
+                <span id="calle-error" class="error-message"></span>
+               </div>
+               <div class="col form-group">
+                 <label for="">Casa/Edificio</label>
+                <input type="text" id="vivienda" name="vivienda" placeholder="Casa/Edificio" class="form-control" formControlName="casa">
+                <span id="casa-error" class="error-message"></span>
+               </div>
+               <div class="col form-group">
+                 <label for="">Piso</label>
+                <input type="text" id="piso" name="piso" placeholder="Piso" class="form-control" formControlName="piso">
+               
+               </div>
+               <div class="col form-group">
+                 <label for="">Nro. Apto</label>
+                <input type="text" id="apto" name="apto" placeholder="Apartamento" class="form-control" formControlName="apto">
+              
+               </div>
+            </div>
+       <div class="form-group">
+                <label for="">Observaciones</label>
+                <input type="text" id="observaciones" name="observaciones" 
+                placeholder="Observaciones" class="form-control" formControlName="Observation">
+                <span id="observaciones-error" class="error-message"></span>
+            </div>
+
+     
+
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary" id="confirm-btn" (click)="sendDespacho()">Generar Guía Despacho </button>
+
+            </div>
+
+
+            </form>
+    </div>
+</div>
