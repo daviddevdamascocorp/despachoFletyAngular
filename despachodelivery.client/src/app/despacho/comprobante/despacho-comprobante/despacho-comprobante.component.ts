@@ -40,7 +40,7 @@ export class DespachoComprobanteComponent implements OnInit{
     
     this.despachoService.getComprobanteCliente(dataComprobante).subscribe(data=>{
 
-     saveAs(data, `reparacion-${factura}.pdf`)
+     saveAs(data, `despacho-${factura}.pdf`)
     })
   }
 
