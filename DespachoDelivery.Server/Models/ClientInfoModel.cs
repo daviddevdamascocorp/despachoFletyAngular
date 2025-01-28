@@ -29,7 +29,7 @@
         public string? PhoneNumberClient2 { get; set; }
 
 
-        public List<Article> Articles { get; set; }
+
 
 
 

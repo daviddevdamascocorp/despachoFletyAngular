@@ -214,7 +214,7 @@ INNER JOIN KLK_FACTURAHDR fa ON li.NumFactura = fa.NumFactura and li.Sucursal=fa
 
             //  var CouponDateFormatted = dates.ToString("dd/MM/yyyy");
             var result = "";
-            var messageBody = $"¡Gracias por su compra! Nos complace informarle que cuenta con un servicio de entrega asignado con Flety. Para realizar el seguimiento de su envío por favor contactarse al siguiente numero de Flety 04126087124 para compartir sus opiniones, haga clic aquí:   https://forms.office.com/r/iDEhvgHMx1?origin=lprLink  Damasco siempre te da mas." +
+            var messageBody = $"¡Gracias por su compra! Nos complace informarle que cuenta con un servicio de entrega asignado con Flety,en 48 horas su pedido sera entregado. Para realizar el seguimiento de su envío por favor contactarse al siguiente numero de Flety 04126087124 para compartir sus opiniones, haga clic aquí:   https://forms.office.com/r/iDEhvgHMx1?origin=lprLink  Damasco siempre te da mas." +
                 $"";
             var url = "http://200.74.198.50:14010/notifismsdamas";
             messageContent.Message = messageBody;
