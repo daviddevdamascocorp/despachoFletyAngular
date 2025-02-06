@@ -4,6 +4,10 @@
         <div class="row rows-col-2">
             <div class="col">
                 <div class="col">
+                    <h3 class="text-start">Despacho</h3>
+                    <p class="text-start">{{fletyResp.idDespacho}}</p>
+                </div>
+                <div class="col">
                     <h3 class="text-start">Factura</h3>
                     <p class="text-start">{{fletyResp.numFactura}}</p>
                 </div>
@@ -43,7 +47,7 @@
                 <button href="#" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true" routerLink="/despacho">Regresar</button>
             </div>
             <div class="col"><button href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true" 
-                (click)="generarPdf(fletyResp.numFactura,fletyResp.idSucursal)">Imprimir</button></div>
+                (click)="generarPdf(fletyResp.numFactura,fletyResp.idSucursal,fletyResp.idDespacho)">Imprimir</button></div>
         </div>
     </div>
 </div>

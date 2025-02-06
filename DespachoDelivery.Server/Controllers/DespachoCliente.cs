@@ -238,15 +238,15 @@ INNER JOIN KLK_FACTURAHDR fa ON li.NumFactura = fa.NumFactura and li.Sucursal=fa
 
         }
 
-        [HttpGet("consulta/{numfac}/almacen/{sucursal}")]
-        public IActionResult GetDeliveryClientes(string numfac, string sucursal)
+        [HttpGet("consulta/{numfac}/almacen/{sucursal}/despacho/{despacho}")]
+        public IActionResult GetDeliveryClientes(string numfac, string sucursal,int despacho)
         {
 
             var sucurLong = Convert.ToInt64(sucursal);
             int totalDigits = sucursal.Length;
 
             int primerosDosDigitos = (int)(sucurLong / (int)Math.Pow(10, totalDigits - 2));
-            var resp = GetDeliveryClientesResp(primerosDosDigitos, numfac);
+            var resp = GetDeliveryClientesResp(primerosDosDigitos, numfac, despacho);
             return Ok(resp);
 
         }
@@ -262,7 +262,7 @@ INNER JOIN KLK_FACTURAHDR fa ON li.NumFactura = fa.NumFactura and li.Sucursal=fa
 
                 using (SqlCommand sqlCommand = new SqlCommand(@"INSERT INTO  Flety
                 ([Numfactura],[Tienda],[Estatus],[Fecha_Actualizacion],[DireccionEnvio],[ObservacionEnvio],[CorreoCliente],[TelefonoCliente]) 
-                VALUES (@numfactura, @Tienda,'Pendiente', @fecha,@direccion,@observacion,@correo,@telefono)",
+                VALUES (@numfactura, @Tienda,'Pendiente', @fecha,@direccion,@observacion,@correo,@telefono);SELECT SCOPE_IDENTITY();",
                         _connectionKlkPos))
                 {
 
@@ -277,7 +277,7 @@ INNER JOIN KLK_FACTURAHDR fa ON li.NumFactura = fa.NumFactura and li.Sucursal=fa
 
                     // Ejecutar la consulta
                     var registroAlmacenado = sqlCommand.ExecuteNonQuery();
-
+                    _connectionKlkPos.Close();
                     isSuccess = true;
                     message = "Ingreso guardado exitosamente.";
                     if (registroAlmacenado > 0)
@@ -287,7 +287,8 @@ INNER JOIN KLK_FACTURAHDR fa ON li.NumFactura = fa.NumFactura and li.Sucursal=fa
                         int totalDigits = destinoStr.Length;
 
                         int primerosDosDigitos = (int)(sucurLong / (int)Math.Pow(10, totalDigits - 2));
-                        resp = GetDeliveryClientesResp(primerosDosDigitos, clientInfo.InvoiceNumber);
+                        var despacho = sqlCommand.ExecuteScalar();
+                        resp = GetDeliveryClientesResp(primerosDosDigitos, clientInfo.InvoiceNumber, Convert.ToInt32(despacho));
                         return Ok(resp);
                     }
                 }
@@ -309,20 +310,25 @@ INNER JOIN KLK_FACTURAHDR fa ON li.NumFactura = fa.NumFactura and li.Sucursal=fa
             return Ok(resp);
         }
 
-
-        public FletyCliente GetDeliveryClientesResp(int sucursal, string numfactura)
+        [HttpGet("sucursal/{sucursal}/numfactura/{numfactura}")]
+        public FletyCliente GetDeliveryClientesResp(int sucursal, string numfactura, int id_despacho)
         {
            FletyCliente fletyCliente = new FletyCliente();
 
             ConnectionKlkPos();
             //cabcera del cliente
 
-            SqlCommand facturaHeaderCommand = new SqlCommand("SELECT\r\n    fa.NumFactura as NumFactura,\r\n    fa.CodCliente as CodCliente,\r\n    fa.NomCliente as NomCliente,\r\n    fa.Telefono as Telefono,\r\n    MAX(fe.Estatus) AS Estatus, -- Seleccionamos el último estatus (puedes ajustar según tus necesidades)\r\n    fa.Sucursal as Sucursal,\r\n\tfa.IDSucursal as IDSucursal,\r\n\tfe.DireccionEnvio as DireccionEnvio,\r\n\tfe.ObservacionEnvio as ObservacionEnvio,\r\n\tfe.TelefonoCliente as TelefonoCliente,\r\n    fa.FechaFactura AS FechaFac,\r\n    MAX(fe.Fecha_Actualizacion) AS FechaActFlety,\r\n\tfe.DireccionEnvio\r\n\t\r\n\tFROM\r\n    KLK_FACTURAHDR fa\r\nJOIN flety fe ON fa.NumFactura = fe.Numfactura\r\n    AND LEFT(fe.Tienda, 2) = fa.IDSucursal where fa.NumFactura=@numfactura and fa.IDSucursal = @IdSucursal\r\nGROUP BY\r\n    fa.NumFactura,\r\n    fa.CodCliente,\r\n    fa.NomCliente,\r\n    fa.Telefono,\r\n    fa.Sucursal,\r\n\tfa.IDSucursal,\r\n\tfe.DireccionEnvio,\r\n\tfe.ObservacionEnvio,\r\n\tfe.TelefonoCliente,\r\n    fa.FechaFactura ", _connectionKlkPos);
+            SqlCommand facturaHeaderCommand = new SqlCommand("SELECT fa.NumFactura as NumFactura,fa.CodCliente as CodCliente,fa.NomCliente as NomCliente,fa.Telefono as Telefono," +
+                "MAX(fe.Estatus) AS Estatus, fa.Sucursal as Sucursal,fa.IDSucursal as IDSucursal," +
+                "fe.DireccionEnvio as DireccionEnvio,fe.Id_despacho as Despacho,fe.ObservacionEnvio as ObservacionEnvio,fe.TelefonoCliente as TelefonoCliente,fa.FechaFactura AS FechaFac,MAX(fe.Fecha_Actualizacion) AS FechaActFlety,fe.DireccionEnvio " +
+                "FROM KLK_FACTURAHDR fa JOIN flety fe ON fa.NumFactura = fe.Numfactura AND LEFT(fe.Tienda, 2) = fa.IDSucursal where fa.NumFactura=@numfactura and fa.IDSucursal = @IdSucursal and fe.Id_despacho = @idDespacho GROUP BY fa.NumFactura, fa.CodCliente,fa.NomCliente,fa.Telefono,fa.Sucursal," +
+                "fa.IDSucursal,fe.DireccionEnvio,fe.ObservacionEnvio,fe.TelefonoCliente,fa.FechaFactura,fe.Id_despacho ", _connectionKlkPos);
 
             SqlDataAdapter adapterHeader = new SqlDataAdapter(facturaHeaderCommand);
 
             facturaHeaderCommand.Parameters.AddWithValue("@numfactura", numfactura);
             facturaHeaderCommand.Parameters.AddWithValue("@IdSucursal", sucursal);
+            facturaHeaderCommand.Parameters.AddWithValue("@idDespacho", id_despacho);
             _connectionKlkPos.Open();
             using (var reader = facturaHeaderCommand.ExecuteReader())
             {
@@ -330,6 +336,7 @@ INNER JOIN KLK_FACTURAHDR fa ON li.NumFactura = fa.NumFactura and li.Sucursal=fa
                 {
                     try
                     {
+                        fletyCliente.IdDespacho = Convert.ToInt32(reader["Despacho"]);
                         fletyCliente.NumFactura = Convert.ToString(reader["NumFactura"]).Trim();
                         fletyCliente.CodCliente = Convert.ToString(reader["CodCliente"]).Trim();
                         fletyCliente.NomCliente = Convert.ToString(reader["NomCliente"]).Trim();
@@ -392,7 +399,7 @@ INNER JOIN KLK_FACTURAHDR fa ON li.NumFactura = fa.NumFactura and li.Sucursal=fa
          
             Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
             Byte[] bytes;
-            var resultado = GetDeliveryClientesResp(sucur,comprobante.NumFactura);
+            var resultado = GetDeliveryClientesResp(sucur,comprobante.NumFactura,comprobante.IdDespacho);
             try {
                 var document = new GuiaDespacho(resultado);
                 var fileNamePdf = "Despacho" + comprobante.NumFactura + ".pdf";

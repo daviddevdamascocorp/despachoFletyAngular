@@ -44,6 +44,8 @@ namespace DespachoDelivery.Server.Models
                 {
                     row.RelativeItem().Column(col =>
                     {
+                        col.Item().Text($"Despacho #{_fletyCliente.IdDespacho}")
+                     .FontSize(10).SemiBold().FontColor(Colors.Black);
                         col.Item().Text($"Factura #{_fletyCliente.NumFactura}")
                      .FontSize(10).SemiBold().FontColor(Colors.Black);
 

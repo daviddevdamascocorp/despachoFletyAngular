@@ -4,5 +4,7 @@
     {
         public string NumFactura { get; set; }
         public string IdSucursal { get; set; }
+
+        public int IdDespacho { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 export interface FeltyRespuesta {
+    idDespacho:Number;
     numFactura:         string;
     codCliente:         string;
     nomCliente:         string;

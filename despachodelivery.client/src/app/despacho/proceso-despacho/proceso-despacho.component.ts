@@ -78,7 +78,7 @@ export class ProcesoDespachoComponent implements OnInit{
       apto: new FormControl(''),
       AddressClient: new FormControl(''),
       Articles: new FormArray([],[Validators.required]), 
-      Observation: new FormControl(''),
+      Observation: new FormControl('', Validators.pattern('^[a-zA-ZÀ-ú0-9,. ]*$')),
   })
 
   get articles(): FormArray {
@@ -195,6 +195,7 @@ export class ProcesoDespachoComponent implements OnInit{
     this.despachoService.postClienteInfo(data).subscribe(result=>{
       this.loadingService.loadingOff()
       let response = JSON.stringify(result)
+      console.log(response)
       this.router.navigate(['/comprobante'],{queryParams:{datos:btoa(response)}})
    
     })

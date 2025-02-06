@@ -2,6 +2,7 @@
 {
     public class FletyCliente
     {
+        public int IdDespacho { get; set; }
         public string NumFactura { get; set; }
         public string CodCliente { get; set; }
         public string NomCliente { get; set; }

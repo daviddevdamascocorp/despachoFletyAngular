@@ -31,11 +31,12 @@ export class DespachoComprobanteComponent implements OnInit{
     console.log(this.fletyResp.codCliente)
   }
 
-  generarPdf(factura:String,almacen:String){
+  generarPdf(factura:String,almacen:String,despacho:Number){
     let dataComprobante = 
       {
         IdSucursal:almacen,
-        NumFactura:factura
+        NumFactura:factura,
+        IdDespacho:despacho
     }
     
     this.despachoService.getComprobanteCliente(dataComprobante).subscribe(data=>{
