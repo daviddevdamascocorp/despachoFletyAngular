@@ -60,7 +60,7 @@ namespace DespachoDelivery.Server.Models
 
 
 
-                   row.RelativeItem().AlignCenter().Height(60).Width(100).Image(DamascoLogo);
+                   //row.RelativeItem().AlignCenter().Height(60).Width(100).Image(DamascoLogo);
                 });
                 col.Item().Text("Guía de despacho").AlignCenter().Bold().FontSize(12);
             });

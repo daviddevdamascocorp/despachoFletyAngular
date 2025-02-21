@@ -25,9 +25,9 @@ export class DespachoComprobanteComponent implements OnInit{
   
     this.jsonDataDesencript = atob(this.dataPreEncript)
     this.jsonData = JSON.parse(this.jsonDataDesencript)
-    console.log(this.jsonData.value)
-    console.log("hols" + this.jsonData.value)
-    this.fletyResp = this.jsonData.value
+    console.log(this.jsonData)
+    console.log("hols" + this.jsonData.idDespacho)
+    this.fletyResp = this.jsonData
     console.log(this.fletyResp.codCliente)
   }
 

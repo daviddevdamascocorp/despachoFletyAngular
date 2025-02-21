@@ -91,7 +91,8 @@ import { MatTreeModule } from '@angular/material/tree';
     MatTreeModule,
     PortalModule,
     ScrollingModule,
-    MatTableModule],
+    MatTableModule
+  ],
   imports: [
     CommonModule
   ]

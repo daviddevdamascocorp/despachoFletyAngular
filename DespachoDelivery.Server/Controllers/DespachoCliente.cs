@@ -68,33 +68,32 @@ namespace DespachoDelivery.Server.Controllers
             List<SelectListItem> list = new List<SelectListItem>();
             try
             {
-                if (SapConnection.connect())
-                {
-                    Console.WriteLine("Conexión establecida correctamente para obtener sucursales");
-                    SAPbobsCOM.Company company = SapConnection.company;
-                    Recordset recordset = company.GetBusinessObject(BoObjectTypes.BoRecordset);
+                ConnectionDamscoProd();
+               
+                   
                     string query = "select * from aplicativofront";
-                    recordset.DoQuery(query);
-
-                    while (!recordset.EoF)
-                    {
-                        string storeId = recordset.Fields.Item("id_sucursal").Value.ToString();
-                        string Almacen = recordset.Fields.Item("u_almacen").Value.ToString();
-                        string storeName = recordset.Fields.Item("nombre").Value.ToUpper().ToString();
-
-                        list.Add(new SelectListItem
-                        {
-                            Value = storeId + Almacen,
-                            Text = storeName,
-                        });
-
-                        recordset.MoveNext();
-                    }
-                }
-                else
+                SqlCommand sqlCommand = new SqlCommand(query, _connectionDamscoProd);
+                SqlDataAdapter adapter = new SqlDataAdapter(sqlCommand);
+                System.Data.DataTable dataTable = new System.Data.DataTable();
+                _connectionDamscoProd.Open();
+                adapter.Fill(dataTable);
+                _connectionDamscoProd.Close();
+                foreach (DataRow item in dataTable.Rows)
                 {
-                    Console.WriteLine("Error de conexión a SAP Business One al intentar obtener sucursales");
+                    
+                    string storeId = Convert.ToString(item["id_sucursal"]).Trim();
+                    string Almacen = Convert.ToString(item["u_almacen"]).Trim();
+                    string storeName = Convert.ToString(item["nombre"]).Trim();
+                    list.Add(new SelectListItem
+                    {
+                        Value = storeId + Almacen,
+                        Text = storeName,
+                    });
                 }
+
+                    
+                
+               
             }
             catch (Exception ex)
             {
@@ -190,7 +189,7 @@ INNER JOIN KLK_FACTURAHDR fa ON li.NumFactura = fa.NumFactura and li.Sucursal=fa
         }
 
         // POST api/<DespachoCliente>
-        [HttpPost("subir")]
+        /*[HttpPost("subir")]
         public IActionResult Post( ClientInfoModel clientInfo)
         {
 
@@ -199,8 +198,8 @@ INNER JOIN KLK_FACTURAHDR fa ON li.NumFactura = fa.NumFactura and li.Sucursal=fa
             var dataAlmacenada = SaveDataPolicy(clientInfo);
             Console.WriteLine(respMessage);
 
-            return Ok(dataAlmacenada);
-        }
+            return Ok(dataAlmacenada.ToString);
+        }*/
 
         // PUT api/<DespachoCliente>/5
         [HttpGet("{id}")]
@@ -250,9 +249,12 @@ INNER JOIN KLK_FACTURAHDR fa ON li.NumFactura = fa.NumFactura and li.Sucursal=fa
             return Ok(resp);
 
         }
-        private IActionResult SaveDataPolicy(ClientInfoModel clientInfo)
+
+        [HttpPost("subir")]
+        public IActionResult Post(ClientInfoModel clientInfo)
         {
             ConnectionKlkPos();
+           // var respMessage = SendMessage(clientInfo.PhoneNumberClient);
             FletyCliente resp = new FletyCliente();
             try
             {
@@ -260,11 +262,11 @@ INNER JOIN KLK_FACTURAHDR fa ON li.NumFactura = fa.NumFactura and li.Sucursal=fa
                 // Abrir la conexión
                 _connectionKlkPos.Open();
 
-                using (SqlCommand sqlCommand = new SqlCommand(@"INSERT INTO  Flety
+                SqlCommand sqlCommand = new SqlCommand(@"INSERT INTO  Flety
                 ([Numfactura],[Tienda],[Estatus],[Fecha_Actualizacion],[DireccionEnvio],[ObservacionEnvio],[CorreoCliente],[TelefonoCliente]) 
                 VALUES (@numfactura, @Tienda,'Pendiente', @fecha,@direccion,@observacion,@correo,@telefono);SELECT SCOPE_IDENTITY();",
-                        _connectionKlkPos))
-                {
+                         _connectionKlkPos);
+                
 
                     // Asignar parámetros
                     sqlCommand.Parameters.AddWithValue("@numfactura", clientInfo.InvoiceNumber);
@@ -276,38 +278,30 @@ INNER JOIN KLK_FACTURAHDR fa ON li.NumFactura = fa.NumFactura and li.Sucursal=fa
                     sqlCommand.Parameters.AddWithValue("@telefono", clientInfo.PhoneNumberClient);
 
                     // Ejecutar la consulta
-                    var registroAlmacenado = sqlCommand.ExecuteNonQuery();
-                    _connectionKlkPos.Close();
-                    isSuccess = true;
-                    message = "Ingreso guardado exitosamente.";
-                    if (registroAlmacenado > 0)
-                    {
-                        string destinoStr = clientInfo.Sucursal.ToString();
-                        var sucurLong = Convert.ToInt64(clientInfo.Sucursal);
-                        int totalDigits = destinoStr.Length;
+                   
+                
+                // isSuccess = true;
+                // message = "Ingreso guardado exitosamente.";
+             
+                var despacho = sqlCommand.ExecuteScalar();
+                string destinoStr = clientInfo.Sucursal.ToString();
+                 var sucurLong = Convert.ToInt64(clientInfo.Sucursal);
+                 int totalDigits = destinoStr.Length;
 
-                        int primerosDosDigitos = (int)(sucurLong / (int)Math.Pow(10, totalDigits - 2));
-                        var despacho = sqlCommand.ExecuteScalar();
-                        resp = GetDeliveryClientesResp(primerosDosDigitos, clientInfo.InvoiceNumber, Convert.ToInt32(despacho));
-                        return Ok(resp);
-                    }
-                }
+                 int primerosDosDigitos = (int)(sucurLong / (int)Math.Pow(10, totalDigits - 2));
+                
+                 resp = GetDeliveryClientesResp(primerosDosDigitos, clientInfo.InvoiceNumber, Convert.ToInt32(despacho));
+                _connectionKlkPos.Close();
+
+                return  Ok(resp);
+
             }
             catch (Exception ex)
             {
-                isSuccess = false;
-                message = "Error al guardar en la base de datos: " + ex.Message;
-                return BadRequest(message);
+                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = ex.Message });
             }
-            finally
-            {
 
-                if (_connectionKlkPos.State == System.Data.ConnectionState.Open)
-                {
-                    _connectionKlkPos.Close();
-                }
-            }
-            return Ok(resp);
+
         }
 
         [HttpGet("sucursal/{sucursal}/numfactura/{numfactura}")]
@@ -321,7 +315,7 @@ INNER JOIN KLK_FACTURAHDR fa ON li.NumFactura = fa.NumFactura and li.Sucursal=fa
             SqlCommand facturaHeaderCommand = new SqlCommand("SELECT fa.NumFactura as NumFactura,fa.CodCliente as CodCliente,fa.NomCliente as NomCliente,fa.Telefono as Telefono," +
                 "MAX(fe.Estatus) AS Estatus, fa.Sucursal as Sucursal,fa.IDSucursal as IDSucursal," +
                 "fe.DireccionEnvio as DireccionEnvio,fe.Id_despacho as Despacho,fe.ObservacionEnvio as ObservacionEnvio,fe.TelefonoCliente as TelefonoCliente,fa.FechaFactura AS FechaFac,MAX(fe.Fecha_Actualizacion) AS FechaActFlety,fe.DireccionEnvio " +
-                "FROM KLK_FACTURAHDR fa JOIN flety fe ON fa.NumFactura = fe.Numfactura AND LEFT(fe.Tienda, 2) = fa.IDSucursal where fa.NumFactura=@numfactura and fa.IDSucursal = @IdSucursal and fe.Id_despacho = @idDespacho GROUP BY fa.NumFactura, fa.CodCliente,fa.NomCliente,fa.Telefono,fa.Sucursal," +
+                "FROM KLK_FACTURAHDR fa JOIN flety fe ON fa.NumFactura = fe.Numfactura AND fa.IDSucursal = @IdSucursal  where fa.NumFactura=@numfactura and fe.Id_despacho = @idDespacho GROUP BY fa.NumFactura, fa.CodCliente,fa.NomCliente,fa.Telefono,fa.Sucursal," +
                 "fa.IDSucursal,fe.DireccionEnvio,fe.ObservacionEnvio,fe.TelefonoCliente,fa.FechaFactura,fe.Id_despacho ", _connectionKlkPos);
 
             SqlDataAdapter adapterHeader = new SqlDataAdapter(facturaHeaderCommand);
