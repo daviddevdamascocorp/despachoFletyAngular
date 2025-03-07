@@ -26,7 +26,19 @@
     </div>
     <div class="row g-2">
         <form id="cupon-form" [formGroup]="clientesForm">
-          
+    
+    <div class="form-group">
+        <label for="ProveedorId" class="label-req">Proveedor</label>
+        
+        <select  id="Proveedor"  class="form-select" formControlName="Provider" required="*">
+           
+            <option value="">Elige</option>
+            <option *ngFor="let proveedor of proveedores" [value]="proveedor"  >
+                {{proveedor}}
+              </option>
+        </select>
+        <span id="sucursal-error" class="error-message"></span>
+    </div>
             <div class="form-group">
                 <label for="SucursalId" class="label-req">Sucursales</label>
                 

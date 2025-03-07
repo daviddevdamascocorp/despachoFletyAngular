@@ -263,8 +263,8 @@ INNER JOIN KLK_FACTURAHDR fa ON li.NumFactura = fa.NumFactura and li.Sucursal=fa
                 _connectionKlkPos.Open();
 
                 SqlCommand sqlCommand = new SqlCommand(@"INSERT INTO  Flety
-                ([Numfactura],[Tienda],[Estatus],[Fecha_Actualizacion],[DireccionEnvio],[ObservacionEnvio],[CorreoCliente],[TelefonoCliente]) 
-                VALUES (@numfactura, @Tienda,'Pendiente', @fecha,@direccion,@observacion,@correo,@telefono);SELECT SCOPE_IDENTITY();",
+                ([Numfactura],[Tienda],[Estatus],[Fecha_Actualizacion],[DireccionEnvio],[ObservacionEnvio],[CorreoCliente],[TelefonoCliente],[Proveedor],[Fecha_Creacion]) 
+                VALUES (@numfactura, @Tienda,'Pendiente', @fecha,@direccion,@observacion,@correo,@telefono,@proveedor,@fechaCreacion);SELECT SCOPE_IDENTITY();",
                          _connectionKlkPos);
                 
 
@@ -276,13 +276,15 @@ INNER JOIN KLK_FACTURAHDR fa ON li.NumFactura = fa.NumFactura and li.Sucursal=fa
                     sqlCommand.Parameters.AddWithValue("@observacion", clientInfo.Observation);
                     sqlCommand.Parameters.AddWithValue("@correo", clientInfo.CorreoCliente);
                     sqlCommand.Parameters.AddWithValue("@telefono", clientInfo.PhoneNumberClient);
+                sqlCommand.Parameters.AddWithValue("@proveedor", clientInfo.Provider);
+                sqlCommand.Parameters.AddWithValue("@fechaCreacion", clientInfo.DateCreation);
 
-                    // Ejecutar la consulta
-                   
-                
+                // Ejecutar la consulta
+
+
                 // isSuccess = true;
                 // message = "Ingreso guardado exitosamente.";
-             
+
                 var despacho = sqlCommand.ExecuteScalar();
                 string destinoStr = clientInfo.Sucursal.ToString();
                  var sucurLong = Convert.ToInt64(clientInfo.Sucursal);

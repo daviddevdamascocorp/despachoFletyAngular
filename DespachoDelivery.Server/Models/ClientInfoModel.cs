@@ -21,14 +21,14 @@
         public string CorreoCliente { get; set; }
         public string SurnameClient { get; set; }
 
-
+        public DateTime DateCreation  { get; set; }
 
 
         public string PhoneNumberClient { get; set; }
 
         public string? PhoneNumberClient2 { get; set; }
 
-
+        public string Provider {  get; set; }
 
 
 

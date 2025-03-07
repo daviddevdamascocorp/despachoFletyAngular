@@ -36,6 +36,7 @@ export class ProcesoDespachoComponent implements OnInit{
     
   }
   matcher = new MyErrorStateMatcher();
+  today = new Date(); 
   ngOnInit(): void {
       this.despachoService.getTiendasDamasco().subscribe(result=>{
         this.DamascoTiendas = result
@@ -50,8 +51,10 @@ export class ProcesoDespachoComponent implements OnInit{
   }
   cedulas = ['V','J','E']
   telefonos = ['0412','0414','0424','0416','0426']
+  proveedores = ['MRW','Flety']
 
   clientesForm = new FormGroup({
+    Provider: new FormControl('', [Validators.required]),
     InvoiceNumber: new FormControl('', [Validators.required]),
       Sucursal: new FormControl('', [Validators.required]),
       InvoiceDate: new FormControl('', [Validators.required]),
@@ -168,6 +171,7 @@ export class ProcesoDespachoComponent implements OnInit{
     + " " +this.clientesForm.get('calle')?.value + " " +"Casa/Edificio: "+ this.clientesForm.get('casa')?.value + " " + `Piso:${this.clientesForm.get('piso')?.value}  Apartamento:${this.clientesForm.get('apto')?.value}`  
      
     console.log(direccionCompleta)
+    let provedor =   this.clientesForm.get('Provider')?.value
     let sucursal  =   this.clientesForm.get('Sucursal')?.value
     let factura = this.clientesForm.get('InvoiceNumber')?.value
     let cedula =  this.clientesForm.get('Cedula')?.value 
@@ -180,7 +184,7 @@ export class ProcesoDespachoComponent implements OnInit{
    
     
    let data ={AddressClient :  direccionCompleta?.toString(),
-
+    Provider : provedor?.toString(),
     InvoiceNumber : factura?.toString(),
     Sucursal : sucursal?.toString(),
     Cedula : cedula?.toString(),
@@ -189,6 +193,7 @@ export class ProcesoDespachoComponent implements OnInit{
     NameClient : this.clientesForm.get('NameClient')?.value?.toString(),
     SurnameClient : this.clientesForm.get('SurnameClient')?.value?.toString(),
     PhoneNumberClient : numero,
+    DateCreation : this.today,
    Observation: this.clientesForm.get('Observation')?.value?.toString(),
     Articles : listaArticulo} 
     console.log(data)
